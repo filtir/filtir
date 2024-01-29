@@ -1,0 +1,14 @@
+zsvision
+openai
+cohere
+ipdb
+weaviate-client
+bs4
+json5
+fake-useragent
+newspaper3k
+google-api-python-client
+faiss-cpu
+tiktoken
+langchain
+python-dotenv
