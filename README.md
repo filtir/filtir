@@ -23,5 +23,3 @@ In order to run the code you need to set up the following keys and add them to .
 ```bash
 python run_pipeline.py --file example.txt --model gpt-4-1106-preview
 ```
-
-The `<input-file>` contains the text that needs to be fact-checked while `<model>` represents the OpenAI model used in the pipeline.
