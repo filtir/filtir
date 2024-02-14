@@ -10,7 +10,6 @@ from llm_api_utils import (
     estimate_cost_of_text_generation_api_call,
     init_openai_with_api_key,
 )
-from pipeline_paths import PIPELINE_PATHS
 
 
 class CheckClaimAgainstEvidence:

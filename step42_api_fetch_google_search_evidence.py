@@ -4,7 +4,6 @@ from zsvision.zs_utils import BlockTimer
 import json
 import json5
 import argparse
-from pathlib import Path
 import multiprocessing as mp
 from zsvision.zs_multiproc import starmap_with_kwargs
 from datetime import datetime
@@ -12,7 +11,6 @@ import urllib.robotparser
 import urllib.parse
 from urllib.parse import urlunparse
 from utils import get_google_search_results
-from pipeline_paths import PIPELINE_PATHS
 
 import time
 from random import randint

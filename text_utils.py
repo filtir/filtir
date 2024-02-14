@@ -72,46 +72,6 @@ def find_matching_indices(query: str, original_text: str):
     return [(original_start, original_end)]
 
 
-# def find_matching_indices(query: str, original_text: str):
-#     # Function to remove markdown links and create an index map
-#     def remove_links(text):
-#         index_map = []
-#         result = []
-#         markdown_links = re.finditer(r'\[([^\]]+)\]\([^)]+\)', text)
-
-#         prev_end = 0
-#         for match in markdown_links:
-#             result.append(text[prev_end:match.start()])
-#             index_map.extend(range(prev_end, match.start()))
-#             result.append(match.group(1))
-#             index_map.extend(range(match.start(1), match.end(1)))
-#             prev_end = match.end()
-
-#         result.append(text[prev_end:])
-#         index_map.extend(range(prev_end, len(text)))
-
-#         return ''.join(result), index_map
-
-#     # Remove markdown links from the original text and create an index map
-#     cleaned_text, index_map = remove_links(original_text)
-
-#     # Find the start index of the query in the cleaned text
-#     start = cleaned_text.find(query)
-
-#     # If the query is not found, return an empty list
-#     if start == -1:
-#         return []
-
-#     # Add the query length to get the end index
-#     end = start + len(query)
-
-#     # Use the index map to find the corresponding start and end indices in the original text
-#     original_start = index_map[start]
-#     original_end = index_map[end - 1] + 1
-
-#     return [(original_start, original_end)]
-
-
 class TestCases(unittest.TestCase):
     def test_find_matching_indices(self):
         """Test the find_matching_indices() function.

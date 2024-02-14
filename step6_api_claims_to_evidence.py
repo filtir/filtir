@@ -6,7 +6,6 @@ import json
 import argparse
 from zsvision.zs_utils import BlockTimer
 import tiktoken
-from pathlib import Path
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import multiprocessing as mp
 from zsvision.zs_multiproc import starmap_with_kwargs
@@ -16,7 +15,6 @@ from zsvision.zs_multiproc import starmap_with_kwargs
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langchain.docstore.in_memory import InMemoryDocstore
-from pipeline_paths import PIPELINE_PATHS
 
 
 class ClaimToEvidence:

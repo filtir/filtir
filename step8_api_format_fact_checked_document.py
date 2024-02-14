@@ -4,7 +4,6 @@ from collections import defaultdict
 import json
 from text_utils import find_matching_indices
 from pathlib import Path
-from pipeline_paths import PIPELINE_PATHS
 
 
 class FormatDocument:

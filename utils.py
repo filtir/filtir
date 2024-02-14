@@ -1,6 +1,5 @@
 import os
 from functools import lru_cache
-from pipeline_paths import PIPELINE_PATHS
 from langchain_community.utilities import GoogleSearchAPIWrapper
 
 @lru_cache(maxsize=2)

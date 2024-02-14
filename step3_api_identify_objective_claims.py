@@ -4,14 +4,12 @@ import multiprocessing as mp
 from zsvision.zs_multiproc import starmap_with_kwargs
 from typing import List, Dict
 import numpy as np
-from pathlib import Path
 from zsvision.zs_utils import BlockTimer
 from llm_api_utils import (
     call_openai_with_exponetial_backoff,
     estimate_cost_of_text_generation_api_call,
     init_openai_with_api_key,
 )
-from pipeline_paths import PIPELINE_PATHS
 import random
 
 

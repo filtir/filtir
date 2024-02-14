@@ -9,9 +9,7 @@ from step7_api_check_claims_against_evidence import CheckClaimAgainstEvidence
 from step8_api_format_fact_checked_document import FormatDocument
 
 import argparse
-from pipeline_paths import PIPELINE_PATHS
 import json
-from pathlib import Path
 import os
 import copy
 from dotenv import load_dotenv

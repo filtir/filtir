@@ -2,7 +2,6 @@ import argparse
 import json
 import multiprocessing as mp
 from zsvision.zs_multiproc import starmap_with_kwargs
-from pathlib import Path
 from zsvision.zs_utils import BlockTimer
 from text_utils import is_unique_verbatim_quote, parse_passage_quote_and_claim
 from llm_api_utils import (
@@ -10,7 +9,6 @@ from llm_api_utils import (
     estimate_cost_of_text_generation_api_call,
     init_openai_with_api_key,
 )
-from pipeline_paths import PIPELINE_PATHS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 

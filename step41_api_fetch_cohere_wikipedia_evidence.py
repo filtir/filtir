@@ -5,8 +5,6 @@ from datetime import datetime
 import time
 from zsvision.zs_multiproc import starmap_with_kwargs
 import weaviate
-from pathlib import Path
-from pipeline_paths import PIPELINE_PATHS
 import os
 
 
