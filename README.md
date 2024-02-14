@@ -8,7 +8,7 @@ This repo contains the Filtir pipeline for claim extraction and fact-checking.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 ### Setup keys
