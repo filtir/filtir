@@ -50,6 +50,9 @@ def get_fact_checked(text_input, model="gpt-3.5-turbo", mode="slow"):
     results["step3_classify_claims"] = copy.deepcopy(step3_json)
     results["step3_objective_claims"] = copy.deepcopy(step3_filter)
 
+    if len(step3_filter) == 0:
+        return {"fact_checked_md": "No objective claims found!"}
+
     # STEP4.1
     print("Step4.1: Gathering evidence")
     step4_cohere = CohereEvidence()
