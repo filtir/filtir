@@ -53,9 +53,6 @@ class ClassifyClaims:
         return lines
 
     def create_few_shot_learning_prompt(self) -> str:
-        objective_list = self.objective_claims_list
-        subjective_list = self.subjective_claims_list
-
         objective_list = self.read_file(self.objective_claims_file)
         subjective_list = self.read_file(self.subjective_claims_file)
         merged_list = list(
@@ -92,7 +89,7 @@ Objective claims can be verified based on factual data (such as those that could
 referencing an encyclopedia), whereas subjective claims involve a personal interpretation of \
 the data and are more open to debate. \
 For each of the following claims given below the dashed horizontal line, classify them as \
-[subjective] or [objective] by suffixing the claim with the appropriate label.
+[subjective] or [objective] by suffixing the claim with the appropriate label. OUTPUT ONLY the class, either subjective or objective for each claim!
 
 Here are some examples:
 
@@ -102,7 +99,7 @@ Claims:
 {claim_str}
 
 Classifications:\
-    """
+"""
         persona = "You are a careful research assistant who helps with fact-checking and editing informative articles."
         system_message = {"role": "system", "content": persona}
         user_message = {"role": "user", "content": prompt}

@@ -44,48 +44,48 @@ class FixAnchors:
         ], "We should only fix broken passage anchors"
 
         prompt = f"""\
-    Task:
-    A co-worker was tasked with identifying a unique, verbatim quote from a passage that underpins a particular claim. \
-    Unfortunately, they made a mistake and the quote they identified is not unique and verbatim. \
-    Your task is to fix their quote so that it is both verbatim and unique.
+Task:
+A co-worker was tasked with identifying a unique, verbatim quote from a passage that underpins a particular claim. \
+Unfortunately, they made a mistake and the quote they identified is not unique and verbatim. \
+Your task is to fix their quote so that it is both verbatim and unique.
 
-    -----
-    Here is an example passage, together with the claim and the erroneous quote.
+-----
+Here is an example passage, together with the claim and the erroneous quote.
 
-    Passage:
-    In 1940, she was interned in a French camp as an enemy alien, but managed to escape and eventually make her way to the United States in 1941.  \
-    Arendt's experiences during this time would deeply influence her work on totalitarianism and human rights. \
-    In New York, she began to immerse herself in academic life, working as an editor, journalist, and lecturer. \
-    Her first major work, *The Origins of Totalitarianism*, published in 1951, explored the common roots of Nazism and Stalinism, and established her as a significant voice in political philosophy. \
-    ## A Life Of Controversial, Influential Works  \
-    Throughout her career, Arendt wrote a number of seminal, and controversial, works. *The Human Condition* (1958) examined the role of politics in modern societies and introduced the concept of "the public realm" – the space where individuals act and participate in political life. \
-    This exploration of freedom and action would become a recurring theme in her writings.  \
-    Her 1963 publication, *Eichmann in Jerusalem: A Report on the Banality of Evil*, based on her coverage of Adolf Eichmann's trial, ignited significant controversy. \
-    Arendt argued that Eichmann, a key architect of the Holocaust, was not a monster but rather an ordinary bureaucrat who unquestioningly followed orders. \
-    The idea of the "banality of evil" continues to influence discussions on the nature of evil and moral responsibility.  \
-    Arendt's later works, such as *On Revolution* (1963) and *Between Past and Future* (1968), sought to further unravel the complexities of power, authority, and rebellion. \
-    Her writings on these subjects continue to resonate with present-day political struggles, as well as with the works of other philosophers like [Immanuel Kant](/philosophy/2023-immanuel-kant-life-and-work) and [Edmund Husserl](/philosophy/2023-edmund-husserl-his-life-and-work).  \
+Passage:
+In 1940, she was interned in a French camp as an enemy alien, but managed to escape and eventually make her way to the United States in 1941.  \
+Arendt's experiences during this time would deeply influence her work on totalitarianism and human rights. \
+In New York, she began to immerse herself in academic life, working as an editor, journalist, and lecturer. \
+Her first major work, *The Origins of Totalitarianism*, published in 1951, explored the common roots of Nazism and Stalinism, and established her as a significant voice in political philosophy. \
+## A Life Of Controversial, Influential Works  \
+Throughout her career, Arendt wrote a number of seminal, and controversial, works. *The Human Condition* (1958) examined the role of politics in modern societies and introduced the concept of "the public realm" – the space where individuals act and participate in political life. \
+This exploration of freedom and action would become a recurring theme in her writings.  \
+Her 1963 publication, *Eichmann in Jerusalem: A Report on the Banality of Evil*, based on her coverage of Adolf Eichmann's trial, ignited significant controversy. \
+Arendt argued that Eichmann, a key architect of the Holocaust, was not a monster but rather an ordinary bureaucrat who unquestioningly followed orders. \
+The idea of the "banality of evil" continues to influence discussions on the nature of evil and moral responsibility.  \
+Arendt's later works, such as *On Revolution* (1963) and *Between Past and Future* (1968), sought to further unravel the complexities of power, authority, and rebellion. \
+Her writings on these subjects continue to resonate with present-day political struggles, as well as with the works of other philosophers like [Immanuel Kant](/philosophy/2023-immanuel-kant-life-and-work) and [Edmund Husserl](/philosophy/2023-edmund-husserl-his-life-and-work).  \
 
-    Claim:
-    *The Origins of Totalitarianism* established Arendt as a significant voice in political philosophy.
+Claim:
+*The Origins of Totalitarianism* established Arendt as a significant voice in political philosophy.
 
-    Initial attempt at a unique and verbatim quote:
-    [The Origins of Totalitarianism] established her as a significant voice in political philosophy.
+Initial attempt at a unique and verbatim quote:
+[The Origins of Totalitarianism] established her as a significant voice in political philosophy.
 
-    Correct (unique and verbatim) quote:
-    Her first major work, *The Origins of Totalitarianism*, published in 1951, explored the common roots of Nazism and Stalinism, and established her as a significant voice in political philosophy.
-    -----
-    Passage:
-    {original_passage}
+Correct (unique and verbatim) quote:
+Her first major work, *The Origins of Totalitarianism*, published in 1951, explored the common roots of Nazism and Stalinism, and established her as a significant voice in political philosophy.
+-----
+Passage:
+{original_passage}
 
-    Claim:
-    {claim_with_metadata["claim"]}
+Claim:
+{claim_with_metadata["claim"]}
 
-    Initial attempt at a unique verbatim quote:
-    {claim_with_metadata["verbatim_quote"]}
+Initial attempt at a unique verbatim quote:
+{claim_with_metadata["verbatim_quote"]}
 
-    Correct (unique and verbatim) quote:\
-    """
+Correct (unique and verbatim) quote:\
+"""
         persona = "You are a careful research assistant who helps with fact-checking and editing informative articles."
         system_message = {"role": "system", "content": persona}
         user_message = {"role": "user", "content": prompt}

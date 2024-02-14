@@ -39,50 +39,50 @@ class ClaimExtractor:
         init_openai_with_api_key()
         print(f"Processing passage {idx + 1} of {total}")
         prompt = f"""\
-    Task:
-    Enumerate all the discrete factual claims or logical assertions stated in the passage that follows the dashed horizontal line below. \
-    To allow the claims to be linked to the passage, use the format: `VERBATIM_PASSAGE_QUOTE_FOR_CLAIM: <verbatim passage quote for claim>, CLAIM: <claim>` on each line. \
-    The <verbatim passage quote for claim> must be A SINGLE UNEDITED SUBSTRING from the passage that uniquely identifies the claim. \
-    The <verbatim passage quote for claim> must carefully preserve all punctuation and clauses from the original passage. \
-    This text will be used in the final national exam.
+Task:
+Enumerate all the discrete factual claims or logical assertions stated in the passage that follows the dashed horizontal line below. \
+To allow the claims to be linked to the passage, use the format: `VERBATIM_PASSAGE_QUOTE_FOR_CLAIM: <verbatim passage quote for claim>, CLAIM: <claim>` on each line. \
+The <verbatim passage quote for claim> must be A SINGLE UNEDITED SUBSTRING from the passage that uniquely identifies the claim. \
+The <verbatim passage quote for claim> must carefully preserve all punctuation and clauses from the original passage. \
+This text will be used in the final national exam.
 
-    ----------
-    Here is an example passage, together with the verbatim passage quotes and claims that should be extracted from it:
+----------
+Here is an example passage, together with the verbatim passage quotes and claims that should be extracted from it:
 
-    Passage:
-    Immanuel Kant was born in 1724 into a modest, devoutly religious family, with his father working as a saddle-maker. \
-    He was one of nine children, but only five, including Kant, survived to adulthood. \
-    His upbringing was steeped in the Pietist tradition, emphasizing intense religious devotion, a literal interpretation of the Bible, and a strong focus on personal morality. \
-    Kant attended the University of Königsberg, studying various subjects, including theology, metaphysics, and natural science. \
-    After completing his studies, Kant worked as a private tutor for nine years before returning to the University of Königsberg as a lecturer in 1755. \
-    In his works Groundwork of the Metaphysics of Morals (1785) and Critique of Practical Reason (1788), Kant argues that morality is not contingent upon personal desires or cultural norms. \
+Passage:
+Immanuel Kant was born in 1724 into a modest, devoutly religious family, with his father working as a saddle-maker. \
+He was one of nine children, but only five, including Kant, survived to adulthood. \
+His upbringing was steeped in the Pietist tradition, emphasizing intense religious devotion, a literal interpretation of the Bible, and a strong focus on personal morality. \
+Kant attended the University of Königsberg, studying various subjects, including theology, metaphysics, and natural science. \
+After completing his studies, Kant worked as a private tutor for nine years before returning to the University of Königsberg as a lecturer in 1755. \
+In his works Groundwork of the Metaphysics of Morals (1785) and Critique of Practical Reason (1788), Kant argues that morality is not contingent upon personal desires or cultural norms. \
 
 
-    Extracted source phrases and claims:
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Immanuel Kant was born in 1724 into a modest, devoutly religious family [CLAIM] Immanuel Kant was born in 1724.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Immanuel Kant was born in 1724 into a modest, devoutly religious family [CLAIM] Immanuel Kant was born into a modest family.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Immanuel Kant was born in 1724 into a modest, devoutly religious family [CLAIM] Immanuel Kant was born into a devoutly religious family.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] with his father working as a saddle-maker [CLAIM] Immnauel Kant's father worked as a saddle-maker.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] He was one of nine children [CLAIM] Immanuel Kant was one of nine children.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] but only five, including Kant survived to adulthood [CLAIM] Only five of Immanuel Kant's parents' children survived to adulthood.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] His upbringing was steeped in the Pietist tradition [CLAIM] Immanuel Kant's upbringing was steeped in the Pietist tradition.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] emphasizing intense religious devotion [CLAIM] Immanuel Kant's upbringing emphasized intense religious devotion.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] a literal interpretation of the Bible [CLAIM] Immanuel Kant's upbringing emphasized a literal interpretation of the Bible.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] a strong focus on personal morality [CLAIM] Immanuel Kant's upbringing emphasized a strong focus on personal morality.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Kant attended the University of Königsberg [CLAIM] Immanuel Kant attended the University of Königsberg.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] studying various subjects, including theology, metaphysics, and natural science [CLAIM] Immanuel Kant studied theology.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] studying various subjects, including theology, metaphysics, and natural science [CLAIM] Immanuel Kant studied metaphysics.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] studying various subjects, including theology, metaphysics, and natural science [CLAIM] Immanuel Kant studied natural science.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] After completing his studies [CLAIM] Immanuel Kant completed his studies.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] After completing his studies, Kant worked as a private tutor for nine years [CLAIM] After completing his studies, Immanuel Kant worked as a private tutor.
-    [VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] before returning to the University of Königsberg as a lecturer in 1755 [CLAIM] Immanuel Kant returned to the University of Königsberg as a lecturer in 1755.
+Extracted source phrases and claims:
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Immanuel Kant was born in 1724 into a modest, devoutly religious family [CLAIM] Immanuel Kant was born in 1724.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Immanuel Kant was born in 1724 into a modest, devoutly religious family [CLAIM] Immanuel Kant was born into a modest family.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Immanuel Kant was born in 1724 into a modest, devoutly religious family [CLAIM] Immanuel Kant was born into a devoutly religious family.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] with his father working as a saddle-maker [CLAIM] Immnauel Kant's father worked as a saddle-maker.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] He was one of nine children [CLAIM] Immanuel Kant was one of nine children.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] but only five, including Kant survived to adulthood [CLAIM] Only five of Immanuel Kant's parents' children survived to adulthood.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] His upbringing was steeped in the Pietist tradition [CLAIM] Immanuel Kant's upbringing was steeped in the Pietist tradition.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] emphasizing intense religious devotion [CLAIM] Immanuel Kant's upbringing emphasized intense religious devotion.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] a literal interpretation of the Bible [CLAIM] Immanuel Kant's upbringing emphasized a literal interpretation of the Bible.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] a strong focus on personal morality [CLAIM] Immanuel Kant's upbringing emphasized a strong focus on personal morality.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] Kant attended the University of Königsberg [CLAIM] Immanuel Kant attended the University of Königsberg.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] studying various subjects, including theology, metaphysics, and natural science [CLAIM] Immanuel Kant studied theology.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] studying various subjects, including theology, metaphysics, and natural science [CLAIM] Immanuel Kant studied metaphysics.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] studying various subjects, including theology, metaphysics, and natural science [CLAIM] Immanuel Kant studied natural science.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] After completing his studies [CLAIM] Immanuel Kant completed his studies.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] After completing his studies, Kant worked as a private tutor for nine years [CLAIM] After completing his studies, Immanuel Kant worked as a private tutor.
+[VERBATIM_PASSAGE_QUOTE_FOR_CLAIM] before returning to the University of Königsberg as a lecturer in 1755 [CLAIM] Immanuel Kant returned to the University of Königsberg as a lecturer in 1755.
 
-    ----------
-    Passage:
-    {passage}
+----------
+Passage:
+{passage}
 
-    Extracted source phrases and claims:\
-    """
+Extracted source phrases and claims:\
+"""
         persona = "You are a careful research assistant who helps with fact-checking and editing informative articles."
         system_message = {"role": "system", "content": persona}
         user_message = {"role": "user", "content": prompt}
