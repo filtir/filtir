@@ -159,7 +159,6 @@ Classifications:\
                 }
             )
 
-        # TODO: celery
         if self.processes == 1:
             batch_results = []
             for kwargs in kwarg_list:
@@ -186,73 +185,3 @@ Classifications:\
 
         print(f"Returning {len(objective_claims)} objective claims")
         return objective_claims
-
-
-def main():
-    args = parse_args()
-
-    classify_claims = ClassifyClaims(
-        temperature=args.temperature,
-        model=args.model,
-        api_key_path=args.api_key_path,
-        max_claims_per_api_call=args.max_claims_per_api_call,
-        processes=args.processes,
-        filter_str=args.filter_str,
-        refresh=args.refresh,
-    )
-
-    src_dir = PIPELINE_PATHS["extracted_claims_with_anchor_fixes_dir"]
-    src_paths = list(src_dir.glob("**/*.json"))
-    dest_dir = PIPELINE_PATHS["extracted_claims_with_classifications_dir"]
-
-    if args.filter_str:
-        num_paths = len(src_paths)
-        src_paths = [
-            src_path for src_path in src_paths if args.filter_str in src_path.name
-        ]
-        print(f"Filtering for {args.filter_str} (from {num_paths} to {len(src_paths)})")
-    else:
-        print(f"Found {len(src_paths)} files in {src_dir}")
-
-    print(f"Found {len(src_paths)} claim files in {src_dir}")
-
-    for src_path in src_paths:
-        rel_path = src_path.relative_to(src_dir)
-        classified_claims_path = dest_dir / rel_path
-        if not classified_claims_path.exists() or args.refresh:
-            with open(src_path, "r") as f:
-                claims_and_sources = json.load(f)
-            labelled_claims = classify_claims.classify_claims(claims_and_sources)
-            classified_claims_path.parent.mkdir(exist_ok=True, parents=True)
-            with open(classified_claims_path, "w") as f:
-                json.dump(labelled_claims, f, indent=4, sort_keys=True)
-        else:
-            with open(classified_claims_path) as f:
-                labelled_claims = json.load(f)
-
-        objective_claims_path = PIPELINE_PATHS["objective_claims_dir"] / rel_path
-        if not objective_claims_path.exists() or args.refresh:
-            objective_claims = classify_claims.filter_to_objective_claims(
-                labelled_claims,
-            )
-            objective_claims_path.parent.mkdir(exist_ok=True, parents=True)
-            with open(objective_claims_path, "w") as f:
-                json.dump(objective_claims, f, indent=4, sort_keys=True)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--temperature", type=float, default=0)
-    parser.add_argument(
-        "--model", default="gpt-3.5-turbo", choices=["gpt-4", "gpt-3.5-turbo"]
-    )
-    parser.add_argument("--api_key_path", default="OPENAI_API_KEY.txt")
-    parser.add_argument("--max_claims_per_api_call", type=int, default=10)
-    parser.add_argument("--processes", type=int, default=1)
-    parser.add_argument("--filter_str", default="")
-    parser.add_argument("--refresh", action="store_true")
-    return parser.parse_args()
-
-
-if __name__ == "__main__":
-    main()

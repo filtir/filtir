@@ -60,7 +60,6 @@ class GoogleEvidence:
             # If there is no robots.txt or there is an error accessing it, assume it's okay to index
             ok_to_index = True
         except Exception as e:
-            # TODO: fix this hacky solution
             print(f"An unexpected error occurred in step42: {e}")
             # going the safe route
             ok_to_index = False
@@ -146,90 +145,3 @@ class GoogleEvidence:
 
         print(f"Returning web pages for search results for {len(queryset)} queries")
         return results
-
-
-def main():
-    args = parse_args()
-
-    google_evidence = GoogleEvidence(
-        model=args.model,
-        limit=args.limit,
-        refresh=args.refresh,
-        num_search_results_to_keep=args.num_search_results_to_keep,
-        filter_str=args.filter_str,
-        processes=args.processes,
-    )
-
-    src_dir = PIPELINE_PATHS["objective_claims_dir"]
-    src_paths = list(src_dir.glob("**/*.json"))
-
-    if args.filter_str:
-        num_paths = len(src_paths)
-        src_paths = [
-            src_path for src_path in src_paths if args.filter_str in src_path.name
-        ]
-        print(f"Filtering for {args.filter_str} (from {num_paths} to {len(src_paths)})")
-    else:
-        print(f"Found {len(src_paths)} files in {src_dir}")
-
-    print(f"Found {len(src_paths)} claim files in {src_dir}")
-    dest_dir = PIPELINE_PATHS["google_search_results_evidence"]
-
-    if args.limit:
-        print(f"Limited to {args.limit} search querysets")
-        src_paths = src_paths[: args.limit]
-
-    kwarg_list = []
-    dest_paths = []
-    for idx, objective_claims_path in enumerate(src_paths):
-        rel_path = objective_claims_path.relative_to(src_dir)
-        dest_path = dest_dir / rel_path
-
-        if dest_path.exists() and not args.refresh:
-            print(
-                f"For {objective_claims_path}, found results at {dest_path}, skipping"
-            )
-            continue
-
-        with open(objective_claims_path, "r") as f:
-            queryset = json.load(f)
-            kwarg_list.append(
-                {
-                    # "search_results_dest_path": dest_path,
-                    "queryset": queryset,
-                }
-            )
-        dest_paths.append(dest_path)
-
-    # single process
-    if args.processes == 1:
-        results = []
-        for kwargs in kwarg_list:
-            result = google_evidence.fetch_search_results_to_gather_evidence(**kwargs)
-            results.append(result)
-    else:  # multiprocess
-        func = google_evidence.fetch_search_results_to_gather_evidence
-        with mp.Pool(processes=args.processes) as pool:
-            results = starmap_with_kwargs(pool=pool, func=func, kwargs_iter=kwarg_list)
-
-    for result, dest_path in zip(results, dest_paths):
-        dest_path.parent.mkdir(exist_ok=True, parents=True)
-        with open(dest_path, "w") as f:
-            f.write(json.dumps(result, indent=4, sort_keys=True))
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--model", default="gpt-3.5-turbo", choices=["gpt-4", "gpt-3.5-turbo"]
-    )
-    parser.add_argument("--limit", default=0, type=int)
-    parser.add_argument("--refresh", action="store_true")
-    parser.add_argument("--num_search_results_to_keep", type=int, default=3)
-    parser.add_argument("--filter_str", default="")
-    parser.add_argument("--processes", type=int, default=1)
-    return parser.parse_args()
-
-
-if __name__ == "__main__":
-    main()

@@ -66,7 +66,6 @@ class EmbedResults:
                 return evidence_fetched_date
         raise ValueError(f"Could not find evidence fetched date in {data['dates']}")
 
-    # TODO: embed_for_uuid and embed needs to be refactor
     def embed_for_uuid(self, srcs):
         init_openai_with_api_key()
 
@@ -98,7 +97,6 @@ class EmbedResults:
         chunks_to_embed = 0
         chunks_to_skip = 0
 
-        # TODO, give this as input, not reading from disk!!
         for data in srcs:
             evidence_fetched_date = self.parse_date_of_fetching(data)
 
@@ -290,42 +288,3 @@ class EmbedResults:
                 faiss_persist_dir=faiss_persist_dir,
                 metadatas=metadatas,
             )
-
-
-def main():
-    args = parse_args()
-
-    embed_results = EmbedResults(
-        embedding_model=args.embedding_model,
-        limit=args.limit,
-        refresh=args.refresh,
-        refresh_faiss_db=args.refresh_faiss_db,
-        openai_api_key_path=args.openai_api_key_path,
-        cohere_api_key_path=args.cohere_api_key_path,
-        text_embedding_chunk_size=args.text_embedding_chunk_size,
-        filter_str=args.filter_str,
-    )
-    # TODO: this togheter with embed need to be refactor
-    embed_results.embed()
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--embedding_model",
-        default="ada",
-        choices=["ada", "babbage"],
-        help="choose a model to compute chunk embeddings",
-    )
-    parser.add_argument("--limit", default=0, type=int)
-    parser.add_argument("--refresh", action="store_true")
-    parser.add_argument("--refresh_faiss_db", action="store_true")
-    parser.add_argument("--openai_api_key_path", default="OPENAI_API_KEY.txt")
-    parser.add_argument("--cohere_api_key_path", default="COHERE_API_KEY.txt")
-    parser.add_argument("--text_embedding_chunk_size", default=500, type=int)
-    parser.add_argument("--filter_str", default="")
-    return parser.parse_args()
-
-
-if __name__ == "__main__":
-    main()

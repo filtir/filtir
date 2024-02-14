@@ -146,7 +146,6 @@ Extracted source phrases and claims:\
                 }
             )
 
-        # TODO: this won't work with Celery
         if self.processes == 1:
             results = []
             for kwargs in kwarg_list:
@@ -165,57 +164,3 @@ Extracted source phrases and claims:\
 
         print(f"Returning {len(all_claims)} claims (cost: {cost} USD)")
         return all_claims
-
-
-# Keep the original functionality
-def main():
-    args = parse_args()
-    # Create an object of ClaimExtractor
-    extractor = ClaimExtractor(
-        temperature=args.temperature,
-        model=args.model,
-        filter_str=args.filter_str,
-        api_key_path=args.api_key_path,
-        processes=args.processes,
-        refresh=args.refresh,
-    )
-
-    src_dir = PIPELINE_PATHS["source_document_dir"]
-    src_paths = list(src_dir.glob("*.txt"))
-
-    if args.filter_str:
-        num_paths = len(src_paths)
-        src_paths = [
-            src_path for src_path in src_paths if args.filter_str in src_path.name
-        ]
-        print(f"Filtering for {args.filter_str} (from {num_paths} to {len(src_paths)})")
-    else:
-        print(f"Found {len(src_paths)} files in {src_dir}")
-
-    for src_path in src_paths:
-        with open(src_path, "r") as f:
-            text_input = f.read()
-        rel_path = src_path.relative_to(src_dir).with_suffix(".json")
-        dest_path = PIPELINE_PATHS["extracted_claims_dir"] / rel_path
-        if not dest_path.exists() or args.refresh:
-            claims = extractor.extract_claims(text_input)
-            dest_path.parent.mkdir(exist_ok=True, parents=True)
-            with open(dest_path, "w") as f:
-                json.dump(claims, f, indent=4, sort_keys=True)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--temperature", type=float, default=0)
-    parser.add_argument(
-        "--model", default="gpt-3.5-turbo", choices=["gpt-4", "gpt-3.5-turbo"]
-    )
-    parser.add_argument("--filter_str", default="")
-    parser.add_argument("--api_key_path", default="OPENAI_API_KEY.txt")
-    parser.add_argument("--processes", type=int, default=1)
-    parser.add_argument("--refresh", action="store_true")
-    return parser.parse_args()
-
-
-if __name__ == "__main__":
-    main()
