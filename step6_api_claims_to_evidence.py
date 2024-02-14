@@ -13,8 +13,8 @@ from zsvision.zs_multiproc import starmap_with_kwargs
 from llm_api_utils import init_openai_with_api_key, PRICE_PER_1K_TOKENS
 import multiprocessing as mp
 from zsvision.zs_multiproc import starmap_with_kwargs
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings
 from langchain.docstore.in_memory import InMemoryDocstore
 from pipeline_paths import PIPELINE_PATHS
 

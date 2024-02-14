@@ -19,18 +19,6 @@ class CohereEvidence:
     def semantic_search(self, query, client, results_lang=""):
         """
         Query the vectors database and return the top results.
-
-
-        Parameters
-        ----------
-            query: str
-                The search query
-
-            results_lang: str (optional)
-                Retrieve results only in the specified language.
-                The demo dataset has those languages:
-                en, de, fr, es, it, ja, ar, zh, ko, hi
-
         """
 
         nearText = {"concepts": [query]}

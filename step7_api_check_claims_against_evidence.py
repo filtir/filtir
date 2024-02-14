@@ -22,7 +22,7 @@ class CheckClaimAgainstEvidence:
         src_dir=Path("data/raw"),
         dest_dir=Path("data/extracted_claims"),
         filter_str="",
-        processes=8,
+        processes=1,
         refresh=False,
     ):
         self.temperature = temperature
@@ -96,7 +96,7 @@ Date accessed: 2023-05-10
 **Pieces of evidence**:
 {evidence_str}
 **Assessment**:\
-    """
+"""
         persona = "You are a careful research assistant who helps with fact-checking and editing informative articles."
         system_message = {"role": "system", "content": persona}
         user_message = {"role": "user", "content": prompt}

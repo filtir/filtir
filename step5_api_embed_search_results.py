@@ -14,8 +14,8 @@ from llm_api_utils import (
     EMBEDDING_DIMENSIONS,
     PRICE_PER_1K_TOKENS,
 )
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings
 from langchain.docstore.in_memory import InMemoryDocstore
 
 

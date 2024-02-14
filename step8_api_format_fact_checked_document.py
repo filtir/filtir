@@ -117,9 +117,8 @@ class FormatDocument:
 
         # assert number_of_facts_checked != 0, "No facts were checked"
         if number_of_facts_checked == 0:
-            print("!!!!NO facts!!!", original_text)
+            print("No objective facts were found.")
             modified_text = "No clear-cut objective claims were detected."
-        print(f"Returned fact-checked document [statistics: {statistics}]")
         return modified_text
 
 
