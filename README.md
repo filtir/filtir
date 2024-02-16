@@ -1,3 +1,9 @@
+---
+title: Filtir
+app_file: app.py
+sdk: gradio
+sdk_version: 4.19.0
+---
 # Filtir - fact checking pipeline
 
 This repo contains the Filtir pipeline for claim extraction and fact-checking.
@@ -23,3 +29,12 @@ In order to run the code you need to set up the following keys and add them to .
 ```bash
 python run_pipeline.py --file example.txt --model gpt-4-1106-preview
 ```
+
+## Run Gradio app locally
+
+```bash
+python app.py
+```
+
+## Demo
+Demo available [here](https://huggingface.co/spaces/vladbogo/Filtir)
