@@ -6,7 +6,7 @@ from run_pipeline import get_fact_checked
 
 def fact_check_function(text, model):
     # Assume the text is already read from the user input, so we don't need to open a file here
-    out = get_fact_checked(text, mode="slow", model=model)
+    out = get_fact_checked(text, mode="fast", model=model)
     return out["fact_checked_md"]
 
 

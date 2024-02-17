@@ -105,17 +105,16 @@ def get_fact_checked(text_input, model="gpt-3.5-turbo", mode="slow"):
 
     # STEP 8
     print("Step8: Formatting")
-    if mode == "slow":
-        step8 = FormatDocument(model=model, footnote_style="verbose")
-        step8_md = step8.reformat_document_to_include_claims(
-            text_input, step7_json, footnote_style="verbose"
-        )
-        step8_md_terse = step8.reformat_document_to_include_claims(
-            text_input, step7_json, footnote_style="terse"
-        )
+    step8 = FormatDocument(model=model, footnote_style="verbose")
+    step8_md = step8.reformat_document_to_include_claims(
+        text_input, step7_json, footnote_style="verbose"
+    )
+    step8_md_terse = step8.reformat_document_to_include_claims(
+        text_input, step7_json, footnote_style="terse"
+    )
 
-        results["fact_checked_md"] = copy.deepcopy(step8_md)
-        results["fact_checked_terse"] = copy.deepcopy(step8_md_terse)
+    results["fact_checked_md"] = copy.deepcopy(step8_md)
+    results["fact_checked_terse"] = copy.deepcopy(step8_md_terse)
     return results
 
 
