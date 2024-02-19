@@ -17,9 +17,12 @@ def create_gradio_interface():
         fn=fact_check_function,
         inputs=[
             gr.Textbox(
-                lines=10, placeholder="Enter text to fact-check...", label="Input Text"
+                lines=6,
+                placeholder="Enter text to fact-check...",
+                label="Input Text",
+                max_lines=10,
             ),
-            gr.Dropdown(choices=["gpt-4-1106-preview"], label="Model"),
+            gr.Dropdown(choices=["gpt-3.5-turbo", "gpt-4-1106-preview"], label="Model"),
         ],
         outputs=gr.Markdown(label="Filtir Output"),
     )
